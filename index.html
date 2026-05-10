@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pranshu Pahade — Frontend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=Fragment+Mono&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --w: #F5F0E8;
+      --b: #0D0D0D;
+      --r: #E8341C;
+      --y: #F5C842;
+      --g: #1C6E3D;
+      --bl: #1A3A8F;
+      --mid: #777;
+      --border: rgba(13, 13, 13, .12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden
+    }
+
+    body {
+      background: var(--w);
+      color: var(--b);
+      font-family: 'Outfit', sans-serif;
+      cursor: none;
+      overflow-x: hidden
+    }
+
+    /* CURSOR */
+    #c {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      top: 0;
+      left: 0
+    }
+
+    #c .ball {
+      width: 18px;
+      height: 18px;
+      background: var(--b);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width .3s, height .3s
+    }
+
+    #c.grow .ball {
+      width: 52px;
+      height: 52px
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(245, 240, 232, .92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: .1em;
+      color: var(--b);
+      text-decoration: none
+    }
+
+    .nav-mid {
+      display: flex;
+      gap: 28px;
+      list-style: none
+    }
+
+    .nav-mid a {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .nav-mid a:hover {
+      color: var(--b)
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Fragment Mono', monospace;
+      font-size: 11px;
+      color: var(--g)
+    }
+
+    .dot-live {
+      width: 7px;
+      height: 7px;
+      background: var(--g);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      padding-top: 64px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 48px 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-eyebrow span {
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--mid)
+    }
+
+    /* Headline — controlled size */
+    .hero-h {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 8vw, 108px);
+      line-height: .92;
+      letter-spacing: .01em;
+      color: var(--b);
+      margin-bottom: 0;
+    }
+
+    .hero-h .red {
+      color: var(--r)
+    }
+
+    .hero-h .outline {
+      -webkit-text-stroke: 1.5px var(--b);
+      color: transparent;
+    }
+
+    .hero-h .indent {
+      padding-left: clamp(48px, 8vw, 120px)
+    }
+
+    /* Small bio beside headline */
+    .hero-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .hero-bio {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--mid);
+      max-width: 340px;
+    }
+
+    .hero-bio strong {
+      color: var(--b);
+      font-weight: 500
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .btn-solid {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: var(--b);
+      color: var(--w);
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 2px;
+      transition: background .2s;
+    }
+
+    .btn-solid:hover {
+      background: var(--r)
+    }
+
+    .btn-outline {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--b);
+      text-decoration: none;
+      border: 1.5px solid var(--b);
+      padding: 12px 24px;
+      border-radius: 2px;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--b);
+      color: var(--w)
+    }
+
+    /* Floating stickers — smaller, right side */
+    .stickers {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-55%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-end
+    }
+
+    .sticker {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.25;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .s1 {
+      width: 110px;
+      height: 110px;
+      background: var(--r);
+      color: #fff;
+      transform: rotate(10deg);
+      animation: fl1 6s ease-in-out infinite
+    }
+
+    .s2 {
+      width: 88px;
+      height: 88px;
+      background: var(--y);
+      color: var(--b);
+      transform: rotate(-7deg);
+      animation: fl2 5s ease-in-out infinite
+    }
+
+    .s3 {
+      width: 80px;
+      height: 80px;
+      background: var(--g);
+      color: #fff;
+      transform: rotate(5deg);
+      animation: fl1 7s ease-in-out infinite reverse
+    }
+
+    .s4 {
+      width: 72px;
+      height: 72px;
+      background: var(--bl);
+      color: #fff;
+      transform: rotate(-12deg);
+      animation: fl2 8s ease-in-out infinite
+    }
+
+    @keyframes fl1 {
+
+      0%,
+      100% {
+        transform: rotate(10deg) translateY(0)
+      }
+
+      50% {
+        transform: rotate(10deg) translateY(-10px)
+      }
+    }
+
+    @keyframes fl2 {
+
+      0%,
+      100% {
+        transform: rotate(-7deg) translateY(0)
+      }
+
+      50% {
+        transform: rotate(-7deg) translateY(9px)
+      }
+    }
+
+    /* Hero bottom stats bar */
+    .hero-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1.5px solid var(--b);
+    }
+
+    .hbc {
+      padding: 20px 28px;
+      border-right: 1.5px solid var(--b);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hbc:last-child {
+      border-right: none
+    }
+
+    .hbc-label {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--mid)
+    }
+
+    .hbc-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: .04em;
+      color: var(--b)
+    }
+
+    /* TICKER */
+    .ticker {
+      overflow: hidden;
+      padding: 11px 0;
+      background: var(--b);
+      border-top: 1.5px solid var(--b);
+      border-bottom: 1.5px solid var(--b)
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: tick 22s linear infinite
+    }
+
+    .ticker-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: .08em;
+      color: var(--w);
+      padding: 0 32px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .ticker-item::after {
+      content: '✶';
+      color: var(--r);
+      font-size: 16px
+    }
+
+    @keyframes tick {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* SECTION SHARED */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    /* WORK */
+    #work {
+      padding: 72px 48px
+    }
+
+    .projects-scroll {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+    }
+
+    .projects-scroll::-webkit-scrollbar {
+      display: none
+    }
+
+    .pcard {
+      flex-shrink: 0;
+      width: 340px;
+      border: 1.5px solid var(--b);
+      border-radius: 3px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform .25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pcard:hover {
+      transform: translateY(-5px)
+    }
+
+    .pcard-top {
+      padding: 26px 26px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .pcard-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .pcard-num {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 10px;
+      color: var(--mid)
+    }
+
+    .pcard-badge {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .badge-feat {
+      background: var(--r);
+      color: #fff
+    }
+
+    .badge-mvp {
+      background: var(--bl);
+      color: #fff
+    }
+
+    .badge-design {
+      background: var(--y);
+      color: var(--b)
+    }
+
+    .pcard-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      letter-spacing: .02em;
+      line-height: 1;
+      color: var(--b)
+    }
+
+    .pcard-desc {
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: var(--mid);
+      flex: 1
+    }
+
+    .pcard-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding-top: 14px;
+      margin-top: auto
+    }
+
+    .pcard-tag {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 9px;
+      padding: 3px 9px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--mid)
+    }
+
+    .pcard-bottom {
+      padding: 14px 26px;
+      border-top: 1.5px solid var(--b);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pcard-link {
+      font-size: 11px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--b);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .2s
+    }
+
+    .pcard-link:hover {
+      color: var(--r)
+    }
+
+    .pcard-year {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 10px;
+      color: var(--mid)
+    }
+
+    /* colored card tops */
+    .pcard.c-r .pcard-top {
+      background: var(--r)
+    }
+
+    .pcard.c-r .pcard-name,
+    .pcard.c-r .pcard-num {
+      color: #fff
+    }
+
+    .pcard.c-r .pcard-desc {
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .pcard.c-r .pcard-tag {
+      border-color: rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .65)
+    }
+
+    .pcard.c-r .pcard-badge {
+      background: rgba(255, 255, 255, .2);
+      color: #fff
+    }
+
+    .pcard.c-b .pcard-top {
+      background: var(--bl)
+    }
+
+    .pcard.c-b .pcard-name,
+    .pcard.c-b .pcard-num {
+      color: #fff
+    }
+
+    .pcard.c-b .pcard-desc {
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .pcard.c-b .pcard-tag {
+      border-color: rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .65)
+    }
+
+    .pcard.c-y .pcard-top {
+      background: var(--y)
+    }
+
+    .pcard.c-y .pcard-name {
+      color: var(--b)
+    }
+
+    .pcard.c-g .pcard-top {
+      background: var(--g)
+    }
+
+    .pcard.c-g .pcard-name,
+    .pcard.c-g .pcard-num {
+      color: #fff
+    }
+
+    .pcard.c-g .pcard-desc {
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .pcard.c-g .pcard-tag {
+      border-color: rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .65)
+    }
+
+    .scroll-hint {
+      margin-top: 18px;
+      font-family: 'Fragment Mono', monospace;
+      font-size: 10px;
+      color: var(--mid);
+      letter-spacing: .08em
+    }
+
+    /* ABOUT */
+    #about {
+      border-top: 1.5px solid var(--b);
+      display: grid;
+      grid-template-columns: 1fr 1fr
+    }
+
+    .about-l {
+      padding: 72px 56px 72px 48px;
+      border-right: 1.5px solid var(--b);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .about-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 5.5vw, 76px);
+      letter-spacing: .01em;
+      line-height: .92;
+      color: var(--b);
+    }
+
+    .about-heading .red {
+      color: var(--r)
+    }
+
+    .about-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--mid)
+    }
+
+    .about-text strong {
+      color: var(--b);
+      font-weight: 500
+    }
+
+    .about-text p+p {
+      margin-top: 14px
+    }
+
+    .about-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--b);
+      text-decoration: none;
+      border: 1.5px solid var(--b);
+      padding: 13px 26px;
+      border-radius: 2px;
+      width: fit-content;
+      transition: background .2s, color .2s;
+    }
+
+    .about-cta:hover {
+      background: var(--b);
+      color: var(--w)
+    }
+
+    .about-r {
+      padding: 72px 48px 72px 56px;
+      display: flex;
+      flex-direction: column
+    }
+
+    .edu-block {
+      margin-bottom: 40px
+    }
+
+    .edu-block-title {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .edu-row {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .edu-inst {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--b);
+      margin-bottom: 3px
+    }
+
+    .edu-deg {
+      font-size: 12px;
+      color: var(--mid)
+    }
+
+    .edu-yr {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 10px;
+      color: var(--r);
+      white-space: nowrap;
+      padding-top: 3px
+    }
+
+    .cert-block {
+      margin-top: 4px
+    }
+
+    .cert-title {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .cert-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12.5px;
+      color: var(--b);
+    }
+
+    .cert-row::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--r);
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    /* SKILLS */
+    #skills {
+      border-top: 1.5px solid var(--b);
+      padding: 72px 48px;
+      background: var(--b)
+    }
+
+    #skills .section-label {
+      color: rgba(245, 240, 232, .25)
+    }
+
+    #skills .section-label::after {
+      background: rgba(245, 240, 232, .08)
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(245, 240, 232, .07);
+      border: 1px solid rgba(245, 240, 232, .07);
+    }
+
+    .skill-col {
+      padding: 28px 24px;
+      background: var(--b);
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
+
+    .skill-col-head {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, .3);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(245, 240, 232, .07);
+    }
+
+    .skill-item {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: var(--w);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(245, 240, 232, .06);
+      transition: color .2s;
+    }
+
+    .skill-item:hover {
+      color: var(--y)
+    }
+
+    .skill-item:last-child {
+      border-bottom: none
+    }
+
+    /* honest note */
+    .skills-note {
+      margin-top: 28px;
+      font-family: 'Fragment Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 240, 232, .3);
+      line-height: 1.6;
+      border-top: 1px solid rgba(245, 240, 232, .07);
+      padding-top: 20px;
+    }
+
+    .skills-note span {
+      color: var(--y)
+    }
+
+    /* CONTACT */
+    #contact {
+      border-top: 1.5px solid var(--b);
+      padding: 88px 48px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .contact-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 12vw, 160px);
+      color: rgba(13, 13, 13, .04);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      letter-spacing: .05em;
+    }
+
+    .contact-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 720px
+    }
+
+    .contact-tag {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 22px
+    }
+
+    .contact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 100px);
+      letter-spacing: .01em;
+      line-height: .9;
+      color: var(--b);
+      margin-bottom: 40px;
+    }
+
+    .contact-title .acc {
+      color: var(--r)
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(18px, 2.5vw, 30px);
+      letter-spacing: .04em;
+      color: var(--b);
+      text-decoration: none;
+      border-bottom: 2px solid var(--b);
+      padding-bottom: 5px;
+      transition: color .2s, border-color .2s;
+      margin-bottom: 44px;
+    }
+
+    .contact-email:hover {
+      color: var(--r);
+      border-color: var(--r)
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .social-btn {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--b);
+      text-decoration: none;
+      border: 1.5px solid var(--b);
+      padding: 11px 22px;
+      border-radius: 2px;
+      transition: background .2s, color .2s;
+    }
+
+    .social-btn:hover {
+      background: var(--b);
+      color: var(--w)
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1.5px solid var(--b);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+    }
+
+    .foot {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 10px;
+      color: var(--mid)
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .65s, transform .65s
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: none
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      nav {
+        padding: 15px 20px
+      }
+
+      .nav-mid {
+        display: none
+      }
+
+      .hero-body {
+        padding: 48px 20px 32px
+      }
+
+      .hero-h {
+        font-size: clamp(42px, 10vw, 72px)
+      }
+
+      .stickers {
+        display: none
+      }
+
+      .hero-bar {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .hbc {
+        border-bottom: 1.5px solid var(--b)
+      }
+
+      #work {
+        padding: 56px 20px
+      }
+
+      .pcard {
+        width: 290px
+      }
+
+      #about {
+        grid-template-columns: 1fr
+      }
+
+      .about-l {
+        padding: 56px 20px;
+        border-right: none;
+        border-bottom: 1.5px solid var(--b)
+      }
+
+      .about-r {
+        padding: 40px 20px
+      }
+
+      #skills {
+        padding: 56px 20px
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      #contact {
+        padding: 60px 20px
+      }
+
+      footer {
+        padding: 16px 20px;
+        flex-direction: column;
+        gap: 6px;
+        text-align: center
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="c">
+    <div class="ball"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="#">PRANSHU PAHADE</a>
+    <ul class="nav-mid">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="dot-live"></div>
+      Open to internships
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stickers">
+      <div class="sticker s1">Frontend<br />Dev</div>
+      <div class="sticker s2">Open to<br />Work</div>
+      <div class="sticker s3">Pune<br />IN</div>
+      <div class="sticker s4">BTech<br />CSE</div>
+    </div>
+
+    <div class="hero-body">
+      <p class="hero-eyebrow"><span></span>Portfolio · 2025</p>
+      <h1 class="hero-h">
+        <span>BUILDING</span><br />
+        <span class="red">THE WEB</span><br />
+        <span class="outline indent">ONE PROJECT</span><br />
+        <span class="indent">AT A TIME</span>
+      </h1>
+      <div class="hero-row">
+        <p class="hero-bio">
+          Frontend developer from Pune turning ideas into <strong>deployed, real-world products</strong> using
+          HTML, CSS, JavaScript — and increasingly, AI-assisted workflows.
+        </p>
+        <div class="hero-btns">
+          <a class="btn-solid" href="#work">View Work</a>
+          <a class="btn-outline" href="mailto:pahadepranshu07@gmail.com">Say Hello</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-bar">
+      <div class="hbc">
+        <span class="hbc-label">Projects shipped</span>
+        <span class="hbc-val">7+</span>
+      </div>
+      <div class="hbc">
+        <span class="hbc-label">Core stack</span>
+        <span class="hbc-val">HTML · CSS · JS</span>
+      </div>
+      <div class="hbc">
+        <span class="hbc-label">Based in</span>
+        <span class="hbc-val">PUNE, INDIA</span>
+      </div>
+      <div class="hbc">
+        <span class="hbc-label">Status</span>
+        <span class="hbc-val" style="color:var(--g)">AVAILABLE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Prep AI</span>
+      <span class="ticker-item">Wonga MVP</span>
+      <span class="ticker-item">Spendly</span>
+      <span class="ticker-item">Weather App</span>
+      <span class="ticker-item">Task Manager</span>
+      <span class="ticker-item">Movie Search</span>
+      <span class="ticker-item">Stripe Clone</span>
+      <span class="ticker-item">HTML · CSS · JS</span>
+      <span class="ticker-item">Firebase</span>
+      <span class="ticker-item">Figma</span>
+      <span class="ticker-item">AI Workflows</span>
+      <span class="ticker-item">Prep AI</span>
+      <span class="ticker-item">Wonga MVP</span>
+      <span class="ticker-item">Spendly</span>
+      <span class="ticker-item">Weather App</span>
+      <span class="ticker-item">Task Manager</span>
+      <span class="ticker-item">Movie Search</span>
+      <span class="ticker-item">Stripe Clone</span>
+      <span class="ticker-item">HTML · CSS · JS</span>
+      <span class="ticker-item">Firebase</span>
+      <span class="ticker-item">Figma</span>
+      <span class="ticker-item">AI Workflows</span>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <section id="work">
+    <p class="section-label reveal">Selected Projects</p>
+    <div class="projects-scroll">
+
+      <div class="pcard c-r reveal" onclick="window.open('https://pranshu-pahade-prepai.netlify.app/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num">001</span>
+            <span class="pcard-badge badge-feat">Featured</span>
+          </div>
+          <h3 class="pcard-name">Prep AI</h3>
+          <p class="pcard-desc">AI-powered interview prep platform. Practice questions, get feedback, sharpen
+            your skills. Built with HTML/CSS/JS and AI integration, deployed on Netlify.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS/JS</span>
+            <span class="pcard-tag">AI Integration</span>
+            <span class="pcard-tag">Netlify</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade-prepai.netlify.app/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2025</span>
+        </div>
+      </div>
+
+      <div class="pcard c-b reveal" onclick="window.open('https://wonga-three.vercel.app/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num">002</span>
+            <span class="pcard-badge badge-mvp">MVP</span>
+          </div>
+          <h3 class="pcard-name">Wonga</h3>
+          <p class="pcard-desc">Figma prototype → fully working product. Gamified habit & micro-investment
+            platform. Designed in Figma, built using AI-assisted workflows (Google Stitch, Gemini CLI,
+            Claude). Firebase realtime backend.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">AI-Assisted Dev</span>
+            <span class="pcard-tag">Firebase</span>
+            <span class="pcard-tag">Figma → Code</span>
+            <span class="pcard-tag">Vercel</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://wonga-three.vercel.app/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024–25</span>
+        </div>
+      </div>
+
+      <div class="pcard c-y reveal" onclick="window.open('https://pranshu-pahade.github.io/expense-tracker/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta"><span class="pcard-num">003</span></div>
+          <h3 class="pcard-name">Spendly</h3>
+          <p class="pcard-desc">Expense tracker with real-time calculations, category breakdowns, and local
+            storage persistence — built from scratch with vanilla JS.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS/JS</span>
+            <span class="pcard-tag">LocalStorage</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade.github.io/expense-tracker/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" onclick="window.open('https://pranshu-pahade.github.io/weather-dashboard/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta"><span class="pcard-num">004</span></div>
+          <h3 class="pcard-name">Weather Dashboard</h3>
+          <p class="pcard-desc">Live weather app using a public REST API. Location search, dynamic UI updates,
+            fully responsive across all screen sizes.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS/JS</span>
+            <span class="pcard-tag">REST API</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade.github.io/weather-dashboard/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024</span>
+        </div>
+      </div>
+
+      <div class="pcard c-g reveal" onclick="window.open('https://pranshu-pahade.github.io/task-manager/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta"><span class="pcard-num">005</span></div>
+          <h3 class="pcard-name">Task Manager</h3>
+          <p class="pcard-desc">Productivity tool with full CRUD, priority tagging, and local storage
+            persistence. Clean and functional.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS/JS</span>
+            <span class="pcard-tag">CRUD</span>
+            <span class="pcard-tag">LocalStorage</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade.github.io/task-manager/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" onclick="window.open('https://pranshu-pahade.github.io/movie-search/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta"><span class="pcard-num">006</span></div>
+          <h3 class="pcard-name">Movie Search</h3>
+          <p class="pcard-desc">OMDB API-driven movie discovery. Live search, responsive card grid. Fast and
+            clean.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS/JS</span>
+            <span class="pcard-tag">OMDB API</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade.github.io/movie-search/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" onclick="window.open('https://pranshu-pahade.github.io/stripe-landing-page/','_blank')">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num">007</span>
+            <span class="pcard-badge badge-design">UI Study</span>
+          </div>
+          <h3 class="pcard-name">Stripe Clone</h3>
+          <p class="pcard-desc">Pixel-precise Stripe landing recreation. A deep study in layout, gradients,
+            typography, and world-class frontend craft.</p>
+          <div class="pcard-tags">
+            <span class="pcard-tag">HTML/CSS</span>
+            <span class="pcard-tag">Responsive</span>
+          </div>
+        </div>
+        <div class="pcard-bottom">
+          <a class="pcard-link" href="https://pranshu-pahade.github.io/stripe-landing-page/" target="_blank"
+            onclick="event.stopPropagation()">Visit Live ↗</a>
+          <span class="pcard-year">2024</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="scroll-hint reveal">← scroll to explore all projects →</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-l reveal">
+      <div class="about-heading">WHO<br />AM <span class="red">I?</span></div>
+      <div class="about-text">
+        <p>I'm a <strong>frontend developer</strong> from Pune, India — currently studying <strong>BTech CSE (AI
+            & Analytics)</strong> at MIT ADT University.</p>
+        <p>My core skills are <strong>HTML, CSS, and JavaScript</strong> — everything I build starts there. For
+          Wonga, I used AI-assisted workflows (Google Stitch, Gemini CLI, Claude) to go from a Figma design to
+          a deployed product, which taught me a lot about modern product development.</p>
+        <p>I care about building things that <strong>actually work</strong>, look good, and solve real problems.
+          Open to remote internships where I can grow fast.</p>
+      </div>
+      <a class="about-cta" href="mailto:pahadepranshu07@gmail.com">Let's work together →</a>
+    </div>
+
+    <div class="about-r reveal">
+      <div class="edu-block">
+        <p class="edu-block-title">Education</p>
+        <div class="edu-row">
+          <div>
+            <p class="edu-inst">MIT ADT University</p>
+            <p class="edu-deg">BTech — CSE (AI & Analytics)</p>
+          </div>
+          <p class="edu-yr">2024–28</p>
+        </div>
+        <div class="edu-row">
+          <div>
+            <p class="edu-inst">Allen Career Institute</p>
+            <p class="edu-deg">JEE Coaching</p>
+          </div>
+          <p class="edu-yr">2022–24</p>
+        </div>
+        <div class="edu-row">
+          <div>
+            <p class="edu-inst">Blossom International School</p>
+            <p class="edu-deg">Class I – X</p>
+          </div>
+          <p class="edu-yr">2012–22</p>
+        </div>
+      </div>
+
+      <div class="cert-block">
+        <p class="cert-title">Certifications</p>
+        <div class="cert-row">Introduction to Retrieval Augmented Generation</div>
+        <div class="cert-row">Ethical Considerations for Generative AI</div>
+        <div class="cert-row">Networking Basics — Cisco</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label reveal">Toolkit</p>
+    <div class="skills-grid reveal">
+      <div class="skill-col">
+        <p class="skill-col-head">Core Stack</p>
+        <div class="skill-item">HTML5</div>
+        <div class="skill-item">CSS3</div>
+        <div class="skill-item">JavaScript (ES6+)</div>
+        <div class="skill-item">Responsive Design</div>
+      </div>
+      <div class="skill-col">
+        <p class="skill-col-head">Tools & Platforms</p>
+        <div class="skill-item">Git & GitHub</div>
+        <div class="skill-item">Figma</div>
+        <div class="skill-item">Firebase</div>
+        <div class="skill-item">Netlify / Vercel</div>
+      </div>
+      <div class="skill-col">
+        <p class="skill-col-head">AI-Assisted Workflows</p>
+        <div class="skill-item">Google Stitch</div>
+        <div class="skill-item">Gemini CLI</div>
+        <div class="skill-item">Claude AI</div>
+        <div class="skill-item">Prompt Engineering</div>
+      </div>
+      <div class="skill-col">
+        <p class="skill-col-head">Concepts</p>
+        <div class="skill-item">REST API Integration</div>
+        <div class="skill-item">LocalStorage / CRUD</div>
+        <div class="skill-item">UI/UX & Figma</div>
+        <div class="skill-item">Realtime Databases</div>
+      </div>
+    </div>
+    <p class="skills-note reveal">
+      <span>Note:</span> My projects like Wonga use React & Firebase — built primarily through AI-assisted
+      development workflows rather than deep individual mastery. My core expertise is <span>HTML, CSS &
+        JavaScript</span>.
+    </p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-bg">CONTACT</div>
+    <div class="contact-inner">
+      <p class="contact-tag reveal">Get in touch</p>
+      <h2 class="contact-title reveal">LET'S<br />BUILD<br /><span class="acc">SOMETHING.</span></h2>
+      <a class="contact-email reveal" href="mailto:pahadepranshu07@gmail.com">PAHADEPRANSHU07@GMAIL.COM</a>
+      <div class="contact-links reveal">
+        <a class="social-btn" href="https://github.com/pranshu-pahade" target="_blank">GitHub ↗</a>
+        <a class="social-btn" href="https://www.linkedin.com/in/pranshunilesh-pahade" target="_blank">LinkedIn
+          ↗</a>
+        <a class="social-btn" href="https://pranshu-pahade-prepai.netlify.app/" target="_blank">Prep AI ↗</a>
+        <a class="social-btn" href="https://wonga-three.vercel.app/" target="_blank">Wonga ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="foot">© 2025 Pranshu Pahade</span>
+    <span class="foot">Pune, India — Open to remote internships</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const c = document.getElementById('c');
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY });
+    (function loop() {
+      cx += (mx - cx) * .13; cy += (my - cy) * .13;
+      c.style.left = cx + 'px'; c.style.top = cy + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,.pcard,.social-btn,.btn-solid,.btn-outline').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('grow'));
+      el.addEventListener('mouseleave', () => c.classList.remove('grow'));
+    });
+    // Reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('on'), i * 60); obs.unobserve(e.target) }
+      });
+    }, { threshold: .08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+
+</html>
